@@ -39,7 +39,6 @@ AI-generated bullet rewrites and cover letters, and PDF/DOCX export.
 - **ML:** scikit-learn (TF-IDF + cosine similarity), Pandas
 - **Visualization:** Plotly, Matplotlib
 - **Document processing:** PyPDF2, python-docx, ReportLab
-- **Automation:** Selenium (fetch job description from a URL)
 - **Deployment:** Docker / docker-compose
 
 ## Local setup
