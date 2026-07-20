@@ -1,0 +1,29 @@
+FROM python:3.11-slim
+
+# System deps: build tools (for some pip packages) + Chromium/driver for Selenium
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    chromium \
+    chromium-driver \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV CHROME_BIN=/usr/bin/chromium \
+    CHROMEDRIVER_PATH=/usr/bin/chromedriver \
+    PYTHONUNBUFFERED=1
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt \
+    && python -m spacy download en_core_web_sm \
+    && python -m nltk.downloader stopwords
+
+COPY . .
+
+RUN mkdir -p /app/data
+
+EXPOSE 8501
+
+HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health || exit 1
+
+ENTRYPOINT ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
