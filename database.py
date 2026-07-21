@@ -9,7 +9,7 @@ import json
 from datetime import datetime
 from contextlib import contextmanager
 
-DB_PATH = "data/resumetailor.db"
+DB_PATH = "data/resumeanalyzer.db"
 
 
 @contextmanager
@@ -146,3 +146,4 @@ def get_user_resumes(user_id: int):
         cur = conn.cursor()
         cur.execute("SELECT * FROM resumes WHERE user_id = ? ORDER BY created_at DESC", (user_id,))
         return [dict(row) for row in cur.fetchall()]
+
